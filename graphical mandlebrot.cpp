@@ -11,36 +11,48 @@
 std::complex<double> mandle(std::complex<double>z, std::complex<double>c, int detail) {
     //sortof efficient, it doesn't re initialize variables, which is good 
     z = pow(z, 2) + c;
-    detail += 1;
-    if (detail >= 30 || abs(z) >= 2) return z;
+   
+    
     std::cout << z << std::endl;
-    mandle(z, c, detail);
+    return z;
 }
 int main()
 {
-    std::vector<sf::CircleShape*> list;
+    std::vector<sf::CircleShape> list;
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Basic Sfml renderwindow", sf::Style::None);
     window.setFramerateLimit(60);
     
-    std::complex<double>z(0, 0);
-    std::complex<double>c(1, .4);
+   
+    std::complex<double>c(2, 2);
 
     std::complex<double> f;
-    std::vector<std::complex<double>*> points;
-    for (int fraction = 0; fraction <= 10; fraction += 1) {
-        list.push_back(new sf::CircleShape());
-        list[fraction]->setRadius(10);
+    std::vector<std::complex<double>> points;
+    while (window.isOpen()) {
 
-        
-        points.push_back(new std::complex<double>);
-        points[fraction] = mandle(z, { real(c) / fraction ,imag(c) + fraction }, 0);
-        list[fraction]->setPosition(0,0);
+
+        for (int fraction = 0; fraction <= 100; fraction += 1) {//thnx criticalhex 4 fixing <3
+
+            for (int f = 0; f <= 100; f++) {
+                list.push_back(*new sf::CircleShape());
+                list[fraction].setRadius(10);
+
+                std::complex<double> n;
+                points.push_back(n);
+                
+                points[fraction] = mandle({ 0,0 }, { real(c) / fraction ,imag(c) }, 0);
+                list[fraction].setPosition(points[fraction].real() * 400, points[fraction].imag() * 400);
+                window.draw(list[fraction]);
+            }
+
+
+
+        }
+
+
+
+
+         //uncomment this to make clear screen, to stop screen from smudging 
+        window.display();
     }
-    
-    
-
-
-    window.clear(); //uncomment this to make clear screen, to stop screen from smudging 
-    window.display();
 }
 
