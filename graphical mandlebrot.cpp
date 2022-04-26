@@ -23,7 +23,7 @@ int main()
     window.setFramerateLimit(60);
     
    
-    std::complex<double>c(2, 2);
+    std::complex<double>c(1, .4);
 
     std::complex<double> f;
     std::vector<std::complex<double>> points;
@@ -38,14 +38,19 @@ int main()
 
                 std::complex<double> n;
                 points.push_back(n);
-                
-                points[fraction] = mandle({ 0,0 }, { real(c) / fraction ,imag(c) }, 0);
-                list[fraction].setPosition(points[fraction].real() * 400, points[fraction].imag() * 400);
+                points[fraction] = mandle({ 0,0 }, { real(c) / fraction ,imag(c) +f }, 0);
+                list[fraction].setPosition(points[fraction].real() * 100, points[fraction].imag() *100);
                 window.draw(list[fraction]);
             }
 
+            list.push_back(*new sf::CircleShape());
+            list[fraction].setRadius(10);
 
-
+            std::complex<double> n;
+            points.push_back(n);
+            points[fraction] = mandle({0,0}, { real(c) / fraction ,imag(c) * fraction }, 0);
+            list[fraction].setPosition(points[fraction].real()*500, points[fraction].imag()*500);
+            window.draw(list[fraction]);
         }
 
 
